@@ -1,0 +1,38 @@
+table {
+margin: auto;
+border-collapse: collapse;
+}
+
+td {
+padding: 10px 5px 10px 5px;
+max-width: 150px;
+}
+
+tr {
+min-height: 40px;
+}
+
+th {
+background-color: #eaeaea;
+padding: 10px;
+}
+
+tr.even-row {
+background: #fafafa;
+}
+
+.end-col {
+width: 45px;
+}
+
+td.end-col {
+padding: 0px;
+}
+
+.editFieldArticle {
+    width: 90px;
+}
+
+.editFieldColour {
+    width: 60px;
+}

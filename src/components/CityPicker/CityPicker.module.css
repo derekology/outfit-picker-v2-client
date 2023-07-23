@@ -1,0 +1,11 @@
+.selectBox {
+    border-radius: 5px;
+    background-color: #FFFFFF;
+    font-size: inherit;
+    font-family: inherit;
+    font-weight: inherit;
+    color: inherit;
+    margin: 5px 2px;
+    padding:3px 4px;
+    text-align: center;
+  }

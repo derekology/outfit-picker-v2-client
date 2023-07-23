@@ -1,0 +1,35 @@
+.navMenuContainer {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    background-color: #222222;
+    border-top: 5px solid #dd3333;
+    display: flex;
+    justify-content: center;
+    z-index: 999;
+}
+
+.navMenu {
+    width: 250px;
+    padding: 30px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.navItem {
+    font-weight: bold;
+    color: #8d8d8d;
+    text-decoration: none;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.navItem:hover {
+    color: #FFFFFF;
+    text-decoration: none;
+    transition: all 0.2s ease-in-out;
+}
+
+.active {
+    color: #FFFFFF;
+}

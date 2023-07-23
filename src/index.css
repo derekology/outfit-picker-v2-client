@@ -1,0 +1,56 @@
+@import url("https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,200;0,500;0,700;1,200;1,500;1,700&display=swap");
+
+:root {
+  font-family: Raleway, Helvetica, Arial, sans-serif;
+
+  line-height: 1.5;
+  font-weight: 400;
+
+  color-scheme: light dark;
+  color: rgba(0, 0, 0, 0.87);
+  background-color: #FFFFFF;
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-text-size-adjust: 100%;
+}
+
+a {
+  color: #dd3333;
+  text-decoration: inherit;
+}
+a:hover {
+  text-decoration: underline;
+}
+
+body {
+  margin: 0;
+  display: flex;
+  place-items: top;
+  min-width: 320px;
+  min-height: 100vh;
+}
+
+@media (prefers-color-scheme: light) {
+  :root {
+    color: #213547;
+    background-color: #ffffff;
+  }
+  a:hover {
+    color: #747bff;
+  }
+  button {
+    background-color: #f9f9f9;
+  }
+}
+
+input, select {
+  background-color: #FFFFFF;
+  border: 0;
+  border-bottom: 1px solid rgba(0,0,0,.12);
+  color: rgba(0,0,0,.87);
+  font-size: 16px;
+  font-family: Raleway, Helvetica, Arial, sans-serif;
+}
