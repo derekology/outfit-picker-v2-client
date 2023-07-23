@@ -10,13 +10,13 @@ export function ClothingDisplayReadRow(props: { shadeRow: string, item: Clothing
             <td>{ props.item.article }</td>
             <td>{ props.item.colour }</td>
             <td>{ props.item.weight }</td>
-            {/* <td><input type='checkbox' checked={!props.item.isAvailable} disabled={true} readOnly></input></td> */}
             <td>{!props.item.isAvailable && '✓'}</td>
             <td>{( props.item.imageUrl && <a href={props.item.imageUrl} target='_blank'>{ VIEWIMAGEICON }</a>)}
             </td>
             <td>
                 <span
                 data-edit-id={props.item._id}
+                data-owner_uid={props.item.owner}
                 style={{ display: 'none' }}
                 onClick={props.handleEditClick}
                 >
