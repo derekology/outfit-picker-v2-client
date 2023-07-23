@@ -12,8 +12,16 @@ export function ClothingDisplay(props: { loggedInUid: string, updateMade: boolea
     const [editClothingId, setEditClothingId] = useState<string | null>(null);
 
     const handleEditClick = async (e: React.MouseEvent<HTMLElement>) => {
-      const editId = (e.target as HTMLElement).getAttribute("data-edit-id");      
-      setEditClothingId(editId);
+      const clothingOwner = e.currentTarget.dataset.owner_uid
+
+      if (props.loggedInUid === 'demo' || clothingOwner === 'demo' ) {
+          alert('Cannot edit demo clothing. Log in to add your own.')
+      } else if (e.currentTarget.dataset.editId && props.loggedInUid === clothingOwner) {
+          const editId: string = (e.currentTarget.dataset.editId);      
+          setEditClothingId(editId);
+      } else {
+          alert('Unknown error. Please try again later.')
+      }
     };
 
     const handleSetEditClothingId = (_id: string) => {
