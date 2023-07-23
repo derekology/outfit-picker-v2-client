@@ -11,7 +11,6 @@ export function ClothingDisplayEditRow(props: {
   editClothingId: string,
   handleSetEditClothingId: Function
 }) {
-
   const [newImageUrl, setNewImageUrl] = useState<string | null>(null);
 
   const newType = useRef<HTMLSelectElement>(null);
@@ -29,6 +28,14 @@ export function ClothingDisplayEditRow(props: {
         }
       }).open();
   };
+
+  const handleClearImageUrl = () => {
+    setNewImageUrl(null)
+  }
+
+  const handleClearCurrentImage = () => {
+    setNewImageUrl('')
+  }
 
   const resetEditfields = () => {
     props.handleSetEditClothingId(null);
@@ -57,7 +64,7 @@ export function ClothingDisplayEditRow(props: {
       updatedAttributes['isAvailable'] = !newIsAvailable.current.checked;
     }
 
-    if (newImageUrl) {
+    if (newImageUrl !== null) {
       updatedAttributes['imageUrl'] = newImageUrl;
     }
 
@@ -97,9 +104,19 @@ export function ClothingDisplayEditRow(props: {
       </td>
       <td>{<input type='checkbox' defaultChecked={!props.item.isAvailable} data-target-attr='isAvailable' ref={newIsAvailable}></input>}</td>
       <td>{(newImageUrl ?
-        <a style={{ cursor: 'pointer' }} href={props.item.imageUrl} target='_blank'>{VIEWIMAGEICON}</a>
+        <>
+          <a style={{ cursor: 'pointer' }} href={props.item.imageUrl} target='_blank'>{VIEWIMAGEICON}</a>
+          &nbsp;&nbsp;
+          <span title='Cancel pending image update' onClick={handleClearImageUrl} style={{ cursor: 'pointer' }}>{CANCELEDIT}</span>
+        </>
         :
-        <a style={{ cursor: 'pointer' }} onClick={handleImageUpload}>{ADDIMAGEICON}</a>
+        <>
+          <a style={{ cursor: 'pointer' }} onClick={handleImageUpload}>{ADDIMAGEICON}</a>
+          {(props.item.imageUrl !== '' && 
+          <>&nbsp;&nbsp;
+          <span title='Remove current image' onClick={handleClearCurrentImage} style={{ cursor: 'pointer' }}>{CANCELEDIT}</span>
+          </> )}
+        </>
       )}
       </td>
       <td>
