@@ -3,7 +3,7 @@ import './ClosingDisplay.css'
 export function ClothingDisplayPresentational(props: {clothingRows: JSX.Element[]}) {
     return (
         <>
-            <div>
+            <div id='clothesTable'>
                 <table>
                     <thead>
                     <tr>
