@@ -18,7 +18,7 @@ export function ClothingAdderPresentational(props: {handleClothingTypeChange: Re
                 <span>
                     <label htmlFor="article">Article</label>
                     <br/>
-                    <input type="text" name="article" onChange={props.handleClothingArticleChange} />
+                    <input type="text" name="article" placeholder='T-Shirt, Pants, etc.' onChange={props.handleClothingArticleChange} />
                 </span>
                 <span>
                     <label htmlFor="colour">Colour</label>
