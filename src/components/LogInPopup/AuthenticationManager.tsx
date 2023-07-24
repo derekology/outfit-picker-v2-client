@@ -1,7 +1,9 @@
 import { useEffect } from 'react';
 import * as firebaseui from 'firebaseui';
-import 'firebaseui/dist/firebaseui.css';
 import firebase from 'firebase/compat/app';
+
+import 'firebaseui/dist/firebaseui.css';
+import './AuthenticationManager.css'
 
 export function AuthenticationManager() {
     useEffect(() => {
@@ -25,4 +27,4 @@ export function AuthenticationManager() {
     }, []);
 
     return (<></>)
-};
+}
