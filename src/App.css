@@ -1,0 +1,54 @@
+.routeContent {
+    margin-top: 89px;
+    padding: 1.5em 1.5em 5em 1.5em;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    align-content: center;
+    justify-content: center;
+    width: calc(100vw - 3em);
+    text-align: center;
+}
+
+.toggled-form {
+  margin: 10px 0px 40px 0;
+}
+
+button {
+    font-family: Raleway, Helvetica, Arial, sans-serif;
+    background-color: #222222;
+    border: 0;
+    color: #ffffff;
+    text-transform: uppercase;
+    padding: 15px;
+    margin: 20px;
+    font-size: 16px;
+    letter-spacing: 1px;
+    width: fit-content;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  
+button:hover {
+    background-color: #dd3333;
+    transition-duration: 0.2s;
+    cursor: pointer;
+  }
+
+.sec-btn {
+  font-family: Raleway, Helvetica, Arial, sans-serif;
+  background-color: #ffffff;
+  border: solid #eaeaea 2px;
+  color: #222222;
+  text-transform: uppercase;
+  padding: 14px;
+  font-size: 16px;
+  letter-spacing: 1px;
+  margin: 20px;
+}
+
+.sec-btn:hover {
+  background-color: #eaeaea;
+  transition-duration: 0.2s;
+  cursor: pointer;
+}
