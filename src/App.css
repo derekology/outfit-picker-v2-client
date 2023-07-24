@@ -27,11 +27,12 @@ button {
     width: fit-content;
     margin-left: auto;
     margin-right: auto;
+    transition: all 0.2s ease-in-out;
   }
   
 button:hover {
     background-color: #dd3333;
-    transition-duration: 0.2s;
+    transition: all 0.2s ease-in-out;
     cursor: pointer;
   }
 
@@ -45,10 +46,11 @@ button:hover {
   font-size: 16px;
   letter-spacing: 1px;
   margin: 20px;
+  transition: all 0.2s ease-in-out;
 }
 
 .sec-btn:hover {
   background-color: #eaeaea;
-  transition-duration: 0.2s;
+  transition: all 0.2s ease-in-out;
   cursor: pointer;
 }
