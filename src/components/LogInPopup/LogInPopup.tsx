@@ -1,17 +1,13 @@
-import { useState } from 'react'
-
-import { LoginPopupPresentational } from './LogInPopupPresentational';
+import { AuthenticationManager } from '../../components/LogInPopup/AuthenticationManager';
 
 export function LoginPopup() {
-    const [showLoginForm, setShowLoginForm] = useState<boolean>(false);
-
-    const handleShowLoginFormClick = () => {
-        setShowLoginForm(!showLoginForm);
-    }
-
     return (
         <>
-            <LoginPopupPresentational showLoginForm={showLoginForm} handleShowLoginFormClick={handleShowLoginFormClick} />
+            <span id='logInTitle'>Log in / Sign up</span>
+            <div className='toggled-form'>
+                <span id='firebaseui-auth-container'></span>
+                <AuthenticationManager />
+            </div>
         </>
     )
 }
