@@ -1,0 +1,35 @@
+#logInTitle {
+    font-size: 16px;
+    font-weight: bold;
+    text-transform: uppercase;
+    margin-top: 5px;
+    margin-bottom: 10px;
+}
+
+ul.firebaseui-idp-list {
+    margin: 0px;
+    text-align: center;
+}
+
+.firebaseui-list-item {
+    display: inline-block;
+    margin-bottom: 0px!important;
+}
+
+.firebaseui-idp-text {
+    display: none!important;
+}
+
+.firebaseui-idp-button, .firebaseui-tenant-button {
+    filter: brightness(0.97);
+    min-width: 36px!important;
+    width: 50px!important;
+    height: 40px!important;
+    margin: 0px 15px;
+    transition: all 0.2s ease-in-out;
+}
+
+.firebaseui-idp-button:hover, .firebaseui-tenant-button:hover {
+    filter: brightness(1.15);
+    transition: all 0.2s ease-in-out;
+}
