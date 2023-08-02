@@ -1,0 +1,10 @@
+.logOutLink {
+    font-size: smaller;
+    color: #dd3333;
+    padding-bottom: 2em;
+}
+
+.logOutLink:hover {
+    cursor: pointer;
+    text-decoration: underline;
+}

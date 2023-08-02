@@ -1,6 +1,6 @@
 import styles from './ClothingAdder.module.css'
 
-export function ClothingAdderPresentational(props: {handleClothingTypeChange: React.ChangeEventHandler<HTMLInputElement>, handleClothingArticleChange: React.ChangeEventHandler<HTMLInputElement>, handleClothingColourChange: React.ChangeEventHandler<HTMLInputElement>, handleClothingWeightChange: React.ChangeEventHandler<HTMLSelectElement>, handleAddClothing: React.MouseEventHandler<HTMLButtonElement>, generateUploadButton: () => JSX.Element, handleLogOut: React.MouseEventHandler<HTMLParagraphElement>}) {
+export function ClothingAdderPresentational(props: {handleClothingTypeChange: React.ChangeEventHandler<HTMLInputElement>, handleClothingArticleChange: React.ChangeEventHandler<HTMLInputElement>, handleClothingColourChange: React.ChangeEventHandler<HTMLInputElement>, handleClothingWeightChange: React.ChangeEventHandler<HTMLSelectElement>, handleAddClothing: React.MouseEventHandler<HTMLButtonElement>, generateUploadButton: () => JSX.Element}) {
     return (
         <>
             <div className={`${styles.addClothingForm} toggled-form`}>
@@ -39,7 +39,6 @@ export function ClothingAdderPresentational(props: {handleClothingTypeChange: Re
                     <props.generateUploadButton />
                 </span>
                 <span><button onClick={props.handleAddClothing}>Add</button></span>
-                <span className={styles.logOutLink} onClick={props.handleLogOut}>Log Out</span>
             </div>
         </>
     )
