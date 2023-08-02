@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import axios from 'axios';
-import firebase from 'firebase/compat/app';
 
 import { ClothingAdderPresentational } from './ClothingAdderPresentational';
 import { ADDIMAGEICON, CANCELEDIT } from '../../assets/ClothingIcons.tsx';
@@ -15,6 +14,9 @@ export function ClothingAdder(props: { loggedInUid: string, handleUpdateMade: ()
     const [clothingColour, setClothingColour] = useState<string | null>(null);
     const [clothingWeight, setClothingWeight] = useState<string | null>('Light');
     const [clothingImageUrl, setClothingImageUrl] = useState<string>('');
+
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+    const VITE_API_URL: string = import.meta.env.VITE_API_URL
 
     const handleShowAddClothingForm = () => {
         setShowAddClothingForm(!showAddClothingForm);
@@ -37,9 +39,10 @@ export function ClothingAdder(props: { loggedInUid: string, handleUpdateMade: ()
     }
 
     const handleImageUpload = () => {
+        // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call
         window.cloudinary.openUploadWidget(
             { cloud_name: 'wooprojects', upload_preset: 'op_newimg' },
-            (error: any, result: any) => {
+            (error: {error: string}, result: {event: string, info: {secure_url: string}}) => {
               if (!error && result && result.event === "success") {
                 const imageUrl: string = result.info.secure_url;
                 setClothingImageUrl(imageUrl);
@@ -69,9 +72,9 @@ export function ClothingAdder(props: { loggedInUid: string, handleUpdateMade: ()
     const handleAddClothing = () => {
         if (!props.loggedInUid || !clothingType || !clothingArticle || !clothingColour || !clothingWeight) {
             console.log(clothingType, clothingArticle, clothingColour, clothingWeight)
-            alert('Error. Please fill out all required fields.');
+            alert('Error. Please fill out all required fields.')
             return;
-        };
+        }
 
         const clothingToAdd: Clothing = {
             owner: props.loggedInUid,
@@ -83,7 +86,7 @@ export function ClothingAdder(props: { loggedInUid: string, handleUpdateMade: ()
             isAvailable: true
         }
 
-        axios.post(`${import.meta.env.VITE_API_URL}/addClothing`, clothingToAdd)
+        axios.post(`${VITE_API_URL}/addClothing`, clothingToAdd)
         .then(() => {
             props.handleUpdateMade();
             resetClothingForm();
@@ -91,16 +94,6 @@ export function ClothingAdder(props: { loggedInUid: string, handleUpdateMade: ()
         })
         .catch(() => {
             alert('Database error. Please try again later.');
-        });
-    }
-
-    const handleLogOut = () => {
-        firebase.auth().signOut()
-        .then(() => {
-            props.handleLoggedInUidUpdate('demo');
-        })
-        .catch(() => {
-            alert('Error logging out. Please try again later.');
         });
     }
 
@@ -117,7 +110,6 @@ export function ClothingAdder(props: { loggedInUid: string, handleUpdateMade: ()
                         handleClothingWeightChange={handleClothingWeightChange}
                         handleAddClothing={handleAddClothing}
                         generateUploadButton={generateUploadButton}
-                        handleLogOut={handleLogOut}
                     />
                 </> 
             }

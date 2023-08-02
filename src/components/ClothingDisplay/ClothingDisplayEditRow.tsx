@@ -9,7 +9,7 @@ export function ClothingDisplayEditRow(props: {
   shadeRow: string,
   item: ClothingExisting,
   editClothingId: string,
-  handleSetEditClothingId: Function
+  handleSetEditClothingId: (id: string | null) => void,
 }) {
   const [newImageUrl, setNewImageUrl] = useState<string | null>(null);
 
@@ -19,13 +19,18 @@ export function ClothingDisplayEditRow(props: {
   const newWeight = useRef<HTMLSelectElement>(null);
   const newIsAvailable = useRef<HTMLInputElement>(null);
 
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+  const VITE_API_URL: string = import.meta.env.VITE_API_URL
+
   const handleImageUpload = () => {
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call
     window.cloudinary.openUploadWidget(
       { cloud_name: 'wooprojects', upload_preset: 'op_newimg' },
-      (error: any, result: any) => {
+      (error: {error: string}, result: {event: string, info: {secure_url: string}}) => {
         if (!error && result && result.event === "success") {
-          setNewImageUrl(result.info.secure_url);
-        }
+          const imageUrl: string = result.info.secure_url;
+          setNewImageUrl(imageUrl);
+      }
       }).open();
   };
 
@@ -41,41 +46,49 @@ export function ClothingDisplayEditRow(props: {
     props.handleSetEditClothingId(null);
   }
 
-  const handleEditConfirm = async () => {
-    let updatedAttributes: { type?: string, article?: string, colour?: string, weight?: string, isAvailable?: boolean, imageUrl?: string } = {};
+  const handleEditConfirm = () =>  { 
+    const updatedAttributes: { type?: string, article?: string, colour?: string, weight?: string, isAvailable?: boolean, imageUrl?: string } = {};
+      
+    const processEditConfirm = async () => {
+      if (newType.current && props.item.type !== newType.current.value) {
+        updatedAttributes['type'] = newType.current.value;
+      }
 
-    if (newType.current && props.item.type !== newType.current.value) {
-      updatedAttributes['type'] = newType.current.value;
-    }
+      if (newArticle.current && props.item.article !== newArticle.current.value) {
+        updatedAttributes['article'] = newArticle.current.value;
+      }
 
-    if (newArticle.current && props.item.article !== newArticle.current.value) {
-      updatedAttributes['article'] = newArticle.current.value;
-    }
+      if (newColour.current && props.item.colour !== newColour.current.value) {
+        updatedAttributes['colour'] = newColour.current.value;
+      }
 
-    if (newColour.current && props.item.colour !== newColour.current.value) {
-      updatedAttributes['colour'] = newColour.current.value;
-    }
+      if (newWeight.current && props.item.weight !== newWeight.current.value) {
+        updatedAttributes['weight'] = newWeight.current.value;
+      }
 
-    if (newWeight.current && props.item.weight !== newWeight.current.value) {
-      updatedAttributes['weight'] = newWeight.current.value;
-    }
+      if (newIsAvailable.current && newIsAvailable.current.checked !== !props.item.isAvailable) {
+        updatedAttributes['isAvailable'] = !newIsAvailable.current.checked;
+      }
 
-    if (newIsAvailable.current && newIsAvailable.current.checked !== !props.item.isAvailable) {
-      updatedAttributes['isAvailable'] = !newIsAvailable.current.checked;
-    }
+      if (newImageUrl !== null) {
+        updatedAttributes['imageUrl'] = newImageUrl;
+      }
 
-    if (newImageUrl !== null) {
-      updatedAttributes['imageUrl'] = newImageUrl;
-    }
+      await axios.post(`${VITE_API_URL}/updateClothing`, { query: { id: props.editClothingId, update: updatedAttributes } });
+      resetEditfields();
+    };
 
-    await axios.post(`${import.meta.env.VITE_API_URL}/updateClothing`, { query: { id: props.editClothingId, update: updatedAttributes } });
+    processEditConfirm().catch((error) => {console.log(error)});
+  }
+
+  const handleDeleteClothing = () =>{  
+    const processDeleteClothing = async () => {
+      await axios.post(`${VITE_API_URL}/deleteClothing`, { query: { id: props.editClothingId } });
+    };
+
+    processDeleteClothing().catch((error) => {console.log(error)});
     resetEditfields();
-  };
-
-  const handleDeleteClothing = async () => {
-    await axios.post(`${import.meta.env.VITE_API_URL}/deleteClothing`, { query: { id: props.editClothingId } });
-    resetEditfields();
-  };
+  }
 
   const handleEditCancel = () => {
     resetEditfields();
@@ -126,4 +139,4 @@ export function ClothingDisplayEditRow(props: {
       </td>
     </>
   )
-};
+}
