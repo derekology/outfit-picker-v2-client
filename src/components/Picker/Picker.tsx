@@ -6,16 +6,18 @@ import { ClothingExisting } from '../../interfaces/ClothingExisting';
 import { Outfit } from '../../interfaces/Outfit';
 
 export function Picker(props: {appropriateWeight: string | null, loggedInUid: string, handleSelectedOutfitUpdate: (selectedOutfit: Outfit) => void}) {
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+    const API_URL: string = import.meta.env.VITE_API_URL
 
-    const pickOutfit = async () => {
-        try {
-            const res = await axios.post(`${import.meta.env.VITE_API_URL}/getClothing`, { query: {
-              owner: props.loggedInUid,
-              weight: props.appropriateWeight,
-              isAvailable: true
+    const pickOutfit = () => {    
+        const pickOutfitFromServer: () => Promise<void> = async () => {
+            const res: {data: [ClothingExisting]} = await axios.post(`${API_URL}/getClothing`, { query: {
+            owner: props.loggedInUid,
+            weight: props.appropriateWeight,
+            isAvailable: true
             }});
     
-            const clothingData = res.data;
+            const clothingData: [ClothingExisting] = res.data;
 
             const topsArray = clothingData.filter((item: ClothingExisting) => item.type === 'Top');
             const bottomsArray = clothingData.filter((item: ClothingExisting) => item.type === 'Bottom');
@@ -31,11 +33,10 @@ export function Picker(props: {appropriateWeight: string | null, loggedInUid: st
                 const targetBottomIndex = Math.floor(Math.random() * bottomsArray.length);    
                 props.handleSelectedOutfitUpdate({top: topsArray[targetTopIndex], bottom: bottomsArray[targetBottomIndex]});
             }
-
-        } catch (error) {
-            console.error('Error fetching clothing data:', error);
         };
-    };
+
+        pickOutfitFromServer().catch((error) => {console.log(error)});
+    }
 
     return (
         <> 

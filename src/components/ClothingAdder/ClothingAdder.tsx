@@ -16,7 +16,7 @@ export function ClothingAdder(props: { loggedInUid: string, handleUpdateMade: ()
     const [clothingImageUrl, setClothingImageUrl] = useState<string>('');
 
     // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-    const VITE_API_URL: string = import.meta.env.VITE_API_URL
+    const API_URL: string = import.meta.env.VITE_API_URL
 
     const handleShowAddClothingForm = () => {
         setShowAddClothingForm(!showAddClothingForm);
@@ -86,7 +86,7 @@ export function ClothingAdder(props: { loggedInUid: string, handleUpdateMade: ()
             isAvailable: true
         }
 
-        axios.post(`${VITE_API_URL}/addClothing`, clothingToAdd)
+        axios.post(`${API_URL}/addClothing`, clothingToAdd)
         .then(() => {
             props.handleUpdateMade();
             resetClothingForm();

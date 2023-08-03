@@ -20,7 +20,7 @@ export function ClothingDisplayEditRow(props: {
   const newIsAvailable = useRef<HTMLInputElement>(null);
 
   // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-  const VITE_API_URL: string = import.meta.env.VITE_API_URL
+  const API_URL: string = import.meta.env.VITE_API_URL
 
   const handleImageUpload = () => {
     // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call
@@ -74,16 +74,16 @@ export function ClothingDisplayEditRow(props: {
         updatedAttributes['imageUrl'] = newImageUrl;
       }
 
-      await axios.post(`${VITE_API_URL}/updateClothing`, { query: { id: props.editClothingId, update: updatedAttributes } });
+      await axios.post(`${API_URL}/updateClothing`, { query: { id: props.editClothingId, update: updatedAttributes } });
       resetEditfields();
     };
 
     processEditConfirm().catch((error) => {console.log(error)});
   }
 
-  const handleDeleteClothing = () =>{  
-    const processDeleteClothing = async () => {
-      await axios.post(`${VITE_API_URL}/deleteClothing`, { query: { id: props.editClothingId } });
+  const handleDeleteClothing: () => void = () =>{  
+    const processDeleteClothing: () => Promise<void> = async () => {
+      await axios.post(`${API_URL}/deleteClothing`, { query: { id: props.editClothingId } });
     };
 
     processDeleteClothing().catch((error) => {console.log(error)});

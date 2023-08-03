@@ -14,7 +14,8 @@ import { firebaseConfig } from './firebaseConfig';
 import './App.css'
 
 declare global {
-  export interface Window{
+  export interface Window {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     cloudinary: any;
   }
 }
@@ -25,31 +26,8 @@ function App() {
   const [loggedInUid, setLoggedInUid] = useState<string>('demo');
   const [currentPage, setCurrentPage] = useState<string>('');
   const [databaseConnectionStatus, setDatabaseConnectionStatus] = useState<boolean>(false);
-
-  const checkDatabaseConnection = async () => {
-    let tryCount = 0;
-    const maxTries = 10 * 60;
-    const testUrl = `${import.meta.env.VITE_API_URL}/connectionCheck`;
-
-    while (!databaseConnectionStatus && tryCount < maxTries) {
-      await axios.get(testUrl)
-      .then((res) => {
-        if (res.status === 200) {
-          setDatabaseConnectionStatus(true);
-          tryCount = 5;
-        } else {
-          tryCount++;
-          console.log("Unknown error connecting to database.");
-          setTimeout(() => {null}, 1000);
-        }
-      })
-      .catch(() => {
-        tryCount++
-        tryCount % 10 === 0 && console.log('Waiting for database connection...');
-        setTimeout(() => {null}, 1000);
-      });
-    }
-  };
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+  const API_URL: string = import.meta.env.VITE_API_URL;
 
   const getPageUrl = () => {
     const currentURL = window.location.href;
@@ -60,8 +38,8 @@ function App() {
     return filteredSections[0]
   };
 
-  const handleSetCurrentPage = (page: React.MouseEvent<any>) => {
-    const targetPage: string = page.currentTarget.dataset.targetPage;
+  const handleSetCurrentPage = (page: React.MouseEvent<HTMLAnchorElement>) => {
+    const targetPage: string = page.currentTarget.dataset.targetPage ? page.currentTarget.dataset.targetPage : '';
     targetPage ? setCurrentPage(targetPage) : setCurrentPage(getPageUrl());
   };
   
@@ -76,6 +54,7 @@ function App() {
   }, []);
 
   useEffect(() => {
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-argument, @typescript-eslint/no-explicit-any
     onAuthStateChanged(firebase.auth() as any, (user) => {
         if (user) {
             setLoggedInUid(user.uid);
@@ -84,8 +63,33 @@ function App() {
   }, []);
 
   useEffect(() => {
-    checkDatabaseConnection();
-  }, []);
+    const checkDatabaseConnection = async () => {
+      let tryCount = 0;
+      const maxTries = 10 * 60;
+      const testUrl = `${API_URL}/connectionCheck`;
+
+      while (!databaseConnectionStatus && tryCount < maxTries) {
+        await axios.get(testUrl)
+        .then((res) => {
+          if (res.status === 200) {
+            setDatabaseConnectionStatus(true);
+            tryCount = 5;
+          } else {
+            tryCount++;
+            console.log("Unknown error connecting to database.");
+            setTimeout(() => {null}, 1000);
+          }
+        })
+        .catch(() => {
+          tryCount++
+          tryCount % 10 === 0 && console.log('Waiting for database connection...');
+          setTimeout(() => {null}, 1000);
+        });
+      }
+    };
+
+    checkDatabaseConnection().catch((err) => console.log(err));
+  }, [API_URL, databaseConnectionStatus]);
 
   return (
     <>
