@@ -26,10 +26,16 @@ function App() {
   const [loggedInUid, setLoggedInUid] = useState<string>('demo');
   const [currentPage, setCurrentPage] = useState<string>('');
   const [databaseConnectionStatus, setDatabaseConnectionStatus] = useState<boolean>(false);
+
   // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
   const API_URL: string = import.meta.env.VITE_API_URL;
 
-  const getPageUrl = () => {
+  const getPageUrl: () => string = () => {
+    /**
+     * Returns the current page slug based on the URL.
+     * 
+     * @returns The current page slug
+     */
     const currentURL = window.location.href;
     const path = currentURL.replace(window.location.origin, '');
     const sections = path.split('/');
@@ -38,13 +44,21 @@ function App() {
     return filteredSections[0]
   };
 
-  const handleSetCurrentPage = (page: React.MouseEvent<HTMLAnchorElement>) => {
+  const handleSetCurrentPage: (page: React.MouseEvent<HTMLAnchorElement>) => void = (page: React.MouseEvent<HTMLAnchorElement>) => {
+    /**
+     * Sets the current page slug based on the clicked link.
+     * 
+     * @param page - The clicked link
+     */
     const targetPage: string = page.currentTarget.dataset.targetPage ? page.currentTarget.dataset.targetPage : '';
     targetPage ? setCurrentPage(targetPage) : setCurrentPage(getPageUrl());
   };
   
   useEffect(() => {
-    const page = getPageUrl();
+    /**
+     * Sets the current active page based on the URL.
+     */
+    const page: string = getPageUrl();
 
     if (['closet', 'about'].includes(page)) {
       setCurrentPage(page);
@@ -54,6 +68,9 @@ function App() {
   }, []);
 
   useEffect(() => {
+    /**
+     * Sets the logged in user ID based on the Firebase auth state.
+     */
     // eslint-disable-next-line @typescript-eslint/no-unsafe-argument, @typescript-eslint/no-explicit-any
     onAuthStateChanged(firebase.auth() as any, (user) => {
         if (user) {
@@ -63,7 +80,10 @@ function App() {
   }, []);
 
   useEffect(() => {
-    const checkDatabaseConnection = async () => {
+    /**
+     * Checks the database connection status.
+     */
+    const checkDatabaseConnection: () => Promise<void> = async () => {
       let tryCount = 0;
       const maxTries = 10 * 60;
       const testUrl = `${API_URL}/connectionCheck`;

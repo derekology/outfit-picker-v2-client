@@ -9,18 +9,24 @@ export function Picker(props: {appropriateWeight: string | null, loggedInUid: st
     // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
     const API_URL: string = import.meta.env.VITE_API_URL
 
-    const pickOutfit = () => {    
+    const pickOutfit: () => void = () => {
+        /**
+         * Fetches an outfit from the database to display.
+         */
         const pickOutfitFromServer: () => Promise<void> = async () => {
-            const res: {data: [ClothingExisting]} = await axios.post(`${API_URL}/getClothing`, { query: {
+            /**
+             * Fetches the clothing items from the database based on the appropriate weight for the weather.
+             */
+            const res: {data: ClothingExisting[]} = await axios.post(`${API_URL}/getClothing`, { query: {
             owner: props.loggedInUid,
             weight: props.appropriateWeight,
             isAvailable: true
             }});
     
-            const clothingData: [ClothingExisting] = res.data;
+            const clothingData: ClothingExisting[] = res.data;
 
-            const topsArray = clothingData.filter((item: ClothingExisting) => item.type === 'Top');
-            const bottomsArray = clothingData.filter((item: ClothingExisting) => item.type === 'Bottom');
+            const topsArray: ClothingExisting[] = clothingData.filter((item: ClothingExisting) => item.type === 'Top');
+            const bottomsArray: ClothingExisting[] = clothingData.filter((item: ClothingExisting) => item.type === 'Bottom');
 
             if (topsArray.length === 0 && bottomsArray.length === 0) {
                 alert('No appropriate clothing items found. Please add more clothing items to your wardrobe.')

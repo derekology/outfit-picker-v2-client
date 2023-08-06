@@ -18,27 +18,45 @@ export function ClothingAdder(props: { loggedInUid: string, handleUpdateMade: ()
     // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
     const API_URL: string = import.meta.env.VITE_API_URL
 
-    const handleShowAddClothingForm = () => {
+    const handleShowAddClothingForm: () => void = () => {
+        /**
+         * Toggles the display of the add clothing form.
+         */
         setShowAddClothingForm(!showAddClothingForm);
     }
 
-    const handleClothingTypeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const handleClothingTypeChange: (e: React.ChangeEvent<HTMLInputElement>) => void = (e: React.ChangeEvent<HTMLInputElement>) => {
+        /**
+         * Updates the clothing type state.
+         */
         setClothingType(e.target.value);
     }
 
-    const handleClothingArticleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const handleClothingArticleChange: (e: React.ChangeEvent<HTMLInputElement>) => void = (e: React.ChangeEvent<HTMLInputElement>) => {
+        /**
+         * Updates the clothing article state.
+         */
         setClothingArticle(e.target.value);
     }
 
-    const handleClothingColourChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const handleClothingColourChange: (e: React.ChangeEvent<HTMLInputElement>) => void = (e: React.ChangeEvent<HTMLInputElement>) => {
+        /**
+         * Update the clothing colour state.
+         */
         setClothingColour(e.target.value);
     }
 
-    const handleClothingWeightChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const handleClothingWeightChange: (e: React.ChangeEvent<HTMLSelectElement>) => void = (e: React.ChangeEvent<HTMLSelectElement>) => {
+        /**
+         * Updates the clothing weight state.
+         */
         setClothingWeight(e.target.value);
     }
 
-    const handleImageUpload = () => {
+    const handleImageUpload: () => void = () => {
+        /**
+         * Opens the Cloudinary widget to upload an image and stores the returned hosted URL.
+         */
         // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call
         window.cloudinary.openUploadWidget(
             { cloud_name: 'wooprojects', upload_preset: 'op_newimg' },
@@ -50,7 +68,10 @@ export function ClothingAdder(props: { loggedInUid: string, handleUpdateMade: ()
             }).open();
     }
 
-    const generateUploadButton = () => {
+    const generateUploadButton: () => JSX.Element = () => {
+        /**
+         * Generates the upload button for the clothing image.
+         */
         return (
             <>
                 <button className="sec-btn" onClick={handleImageUpload} >                        
@@ -61,7 +82,10 @@ export function ClothingAdder(props: { loggedInUid: string, handleUpdateMade: ()
         )
     }
 
-    const resetClothingForm = () => {
+    const resetClothingForm: () => void = () => {
+        /**
+         * Resets the clothing form.
+         */
         setClothingType(null);
         setClothingArticle(null);
         setClothingColour(null);
@@ -69,7 +93,10 @@ export function ClothingAdder(props: { loggedInUid: string, handleUpdateMade: ()
         setClothingImageUrl('');
     }
 
-    const handleAddClothing = () => {
+    const handleAddClothing: () => void = () => {
+        /**
+         * Adds the clothing to the database.
+         */
         if (!props.loggedInUid || !clothingType || !clothingArticle || !clothingColour || !clothingWeight) {
             console.log(clothingType, clothingArticle, clothingColour, clothingWeight)
             alert('Error. Please fill out all required fields.')

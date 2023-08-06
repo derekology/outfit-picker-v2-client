@@ -9,6 +9,9 @@ export function WeatherForecast(props: {targetCity: string, weatherData: {weathe
     const { targetCity } = props;
     
     useEffect(() => {
+        /**
+         * Fetches the weather data from the OpenWeatherMap API when the target city is set or changes.
+         */
         const URL =
         `https://api.openweathermap.org/data/2.5/weather?q=${props.targetCity}&appid=${OWM_KEY}`;
 

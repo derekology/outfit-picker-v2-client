@@ -22,7 +22,10 @@ export function ClothingDisplayEditRow(props: {
   // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
   const API_URL: string = import.meta.env.VITE_API_URL
 
-  const handleImageUpload = () => {
+  const handleImageUpload: () => void = () => {
+    /**
+     * Opens the Cloudinary widget to upload an image and stores the returned hosted URL.
+     */
     // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call
     window.cloudinary.openUploadWidget(
       { cloud_name: 'wooprojects', upload_preset: 'op_newimg' },
@@ -34,22 +37,34 @@ export function ClothingDisplayEditRow(props: {
       }).open();
   };
 
-  const handleClearImageUrl = () => {
+  const handleClearImageUrl: () => void = () => {
+    /**
+     * Clears the image URL from the edit field.
+     */
     setNewImageUrl(null)
   }
 
-  const handleClearCurrentImage = () => {
+  const handleClearCurrentImage: () => void = () => {
+    /**
+     * Set the image URL from the edit field to an empty string.
+     */
     setNewImageUrl('')
   }
 
-  const resetEditfields = () => {
+  const resetEditfields: () => void = () => {
+    /**
+     * Clears all the edit fields.
+     */
     props.handleSetEditClothingId(null);
   }
 
-  const handleEditConfirm = () =>  { 
+  const handleEditConfirm: () => void = () =>  {
+    /**
+     * Confirms the edit and sends the updated attributes to the API.
+     */
     const updatedAttributes: { type?: string, article?: string, colour?: string, weight?: string, isAvailable?: boolean, imageUrl?: string } = {};
       
-    const processEditConfirm = async () => {
+    const processEditConfirm: () => Promise<void> = async () => {
       if (newType.current && props.item.type !== newType.current.value) {
         updatedAttributes['type'] = newType.current.value;
       }
@@ -81,7 +96,10 @@ export function ClothingDisplayEditRow(props: {
     processEditConfirm().catch((error) => {console.log(error)});
   }
 
-  const handleDeleteClothing: () => void = () =>{  
+  const handleDeleteClothing: () => void = () =>{
+    /**
+     * Deletes the clothing item from the database.
+     */
     const processDeleteClothing: () => Promise<void> = async () => {
       await axios.post(`${API_URL}/deleteClothing`, { query: { id: props.editClothingId } });
     };
@@ -90,7 +108,10 @@ export function ClothingDisplayEditRow(props: {
     resetEditfields();
   }
 
-  const handleEditCancel = () => {
+  const handleEditCancel: () => void = () => {
+    /**
+     * Cancels the edit by resetting the edit fields.
+     */
     resetEditfields();
   };
 
