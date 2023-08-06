@@ -2,30 +2,39 @@ import { useEffect } from 'react';
 import { WeatherForecastPresentational } from './WeatherForecastPresentational';
 import axios from 'axios';
 
-const OWM_KEY = import.meta.env.VITE_OWM_KEY;
+// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+const OWM_KEY: string = import.meta.env.VITE_OWM_KEY;
 
-export function WeatherForecast(props: {targetCity: string, weatherData: {weatherTemp: number | null, weatherInfo: string}, handleWeatherDataChange: Function}) {    
-    const URL =
-    `https://api.openweathermap.org/data/2.5/weather?q=${props.targetCity}&appid=${OWM_KEY}`;
+export function WeatherForecast(props: {targetCity: string, weatherData: {weatherTemp: number | null, weatherInfo: string}, handleWeatherDataChange: (weatherData: {weatherTemp: number | null, weatherInfo: string}) => void}) { 
+    const { targetCity } = props;
+    
+    useEffect(() => {
+        /**
+         * Fetches the weather data from the OpenWeatherMap API when the target city is set or changes.
+         */
+        const URL =
+        `https://api.openweathermap.org/data/2.5/weather?q=${props.targetCity}&appid=${OWM_KEY}`;
 
-    const fetchData: Function = async () => {
-        const response = await axios.get(URL);
-        const data = response.data;
-        const weatherInfo: string = data.weather[0].description;
-        const weatherTemp: number = Math.round(parseFloat(data.main.temp) - 273.15);
+        props.handleWeatherDataChange({weatherTemp: null, weatherInfo: ''});
 
-        const currentWeatherData = {
-            weatherTemp: weatherTemp,
-            weatherInfo: weatherInfo
+        const fetchData: () => Promise<void> = async () => {
+            const response: {data: {weather: [{description: string}], main: {temp: string}}} = await axios.get(URL);
+            
+            const data: {weather: [{description: string}], main: {temp: string}} = response.data;
+            const weatherInfo: string = data.weather[0].description;
+            const weatherTemp: number | null = Math.round(parseFloat(data.main.temp) - 273.15);
+    
+            const currentWeatherData: {weatherTemp: number, weatherInfo: string} = {
+                weatherTemp: weatherTemp,
+                weatherInfo: weatherInfo
+            };
+        
+            props.handleWeatherDataChange(currentWeatherData);
         };
 
-        props.handleWeatherDataChange(currentWeatherData);
-    };
-
-    useEffect(() => {
-        props.handleWeatherDataChange({weatherTemp: '', weatherInfo: ''})
-        fetchData();
-    }, [props.targetCity]);
+        fetchData().catch((error) => {console.log(error)});
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [targetCity]);
 
     return (
         <>

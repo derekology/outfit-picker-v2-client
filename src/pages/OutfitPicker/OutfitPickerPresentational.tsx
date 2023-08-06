@@ -18,7 +18,7 @@ export function OutfitPickerPresentational(props: {
   handleSelectedOutfitUpdate: (selectedOutfit: Outfit) => void;
   selectedOutfit: Outfit | null;
   loggedInUid: string;
-  handleSetCurrentPage: (page: React.MouseEvent<any>) => void;
+  handleSetCurrentPage: (page: React.MouseEvent<HTMLAnchorElement>) => void;
 }) {
   return (
     <>

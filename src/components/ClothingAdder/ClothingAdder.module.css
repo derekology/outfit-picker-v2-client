@@ -18,13 +18,3 @@
 .addClothingForm>*>label {
     font-weight: bold;
 }
-
-.logOutLink {
-    font-size: smaller;
-    color: #dd3333;
-}
-
-.logOutLink:hover {
-    cursor: pointer;
-    text-decoration: underline;
-}

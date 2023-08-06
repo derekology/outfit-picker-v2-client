@@ -3,6 +3,11 @@
     font-weight: bold;
     text-transform: uppercase;
     margin-top: 5px;
+}
+
+#logInSubtitle {
+    font-size: smaller;
+    font-style: italic;
     margin-bottom: 10px;
 }
 

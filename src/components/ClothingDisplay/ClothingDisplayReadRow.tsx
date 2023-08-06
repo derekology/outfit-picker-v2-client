@@ -25,4 +25,4 @@ export function ClothingDisplayReadRow(props: { shadeRow: string, item: Clothing
             </td>
         </>
     )
-};
+}

@@ -9,7 +9,7 @@ export function ClothingDisplayEditRow(props: {
   shadeRow: string,
   item: ClothingExisting,
   editClothingId: string,
-  handleSetEditClothingId: Function
+  handleSetEditClothingId: (id: string | null) => void,
 }) {
   const [newImageUrl, setNewImageUrl] = useState<string | null>(null);
 
@@ -19,65 +19,99 @@ export function ClothingDisplayEditRow(props: {
   const newWeight = useRef<HTMLSelectElement>(null);
   const newIsAvailable = useRef<HTMLInputElement>(null);
 
-  const handleImageUpload = () => {
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+  const API_URL: string = import.meta.env.VITE_API_URL
+
+  const handleImageUpload: () => void = () => {
+    /**
+     * Opens the Cloudinary widget to upload an image and stores the returned hosted URL.
+     */
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-call
     window.cloudinary.openUploadWidget(
       { cloud_name: 'wooprojects', upload_preset: 'op_newimg' },
-      (error: any, result: any) => {
+      (error: {error: string}, result: {event: string, info: {secure_url: string}}) => {
         if (!error && result && result.event === "success") {
-          setNewImageUrl(result.info.secure_url);
-        }
+          const imageUrl: string = result.info.secure_url;
+          setNewImageUrl(imageUrl);
+      }
       }).open();
   };
 
-  const handleClearImageUrl = () => {
+  const handleClearImageUrl: () => void = () => {
+    /**
+     * Clears the image URL from the edit field.
+     */
     setNewImageUrl(null)
   }
 
-  const handleClearCurrentImage = () => {
+  const handleClearCurrentImage: () => void = () => {
+    /**
+     * Set the image URL from the edit field to an empty string.
+     */
     setNewImageUrl('')
   }
 
-  const resetEditfields = () => {
+  const resetEditfields: () => void = () => {
+    /**
+     * Clears all the edit fields.
+     */
     props.handleSetEditClothingId(null);
   }
 
-  const handleEditConfirm = async () => {
-    let updatedAttributes: { type?: string, article?: string, colour?: string, weight?: string, isAvailable?: boolean, imageUrl?: string } = {};
+  const handleEditConfirm: () => void = () =>  {
+    /**
+     * Confirms the edit and sends the updated attributes to the API.
+     */
+    const updatedAttributes: { type?: string, article?: string, colour?: string, weight?: string, isAvailable?: boolean, imageUrl?: string } = {};
+      
+    const processEditConfirm: () => Promise<void> = async () => {
+      if (newType.current && props.item.type !== newType.current.value) {
+        updatedAttributes['type'] = newType.current.value;
+      }
 
-    if (newType.current && props.item.type !== newType.current.value) {
-      updatedAttributes['type'] = newType.current.value;
-    }
+      if (newArticle.current && props.item.article !== newArticle.current.value) {
+        updatedAttributes['article'] = newArticle.current.value;
+      }
 
-    if (newArticle.current && props.item.article !== newArticle.current.value) {
-      updatedAttributes['article'] = newArticle.current.value;
-    }
+      if (newColour.current && props.item.colour !== newColour.current.value) {
+        updatedAttributes['colour'] = newColour.current.value;
+      }
 
-    if (newColour.current && props.item.colour !== newColour.current.value) {
-      updatedAttributes['colour'] = newColour.current.value;
-    }
+      if (newWeight.current && props.item.weight !== newWeight.current.value) {
+        updatedAttributes['weight'] = newWeight.current.value;
+      }
 
-    if (newWeight.current && props.item.weight !== newWeight.current.value) {
-      updatedAttributes['weight'] = newWeight.current.value;
-    }
+      if (newIsAvailable.current && newIsAvailable.current.checked !== !props.item.isAvailable) {
+        updatedAttributes['isAvailable'] = !newIsAvailable.current.checked;
+      }
 
-    if (newIsAvailable.current && newIsAvailable.current.checked !== !props.item.isAvailable) {
-      updatedAttributes['isAvailable'] = !newIsAvailable.current.checked;
-    }
+      if (newImageUrl !== null) {
+        updatedAttributes['imageUrl'] = newImageUrl;
+      }
 
-    if (newImageUrl !== null) {
-      updatedAttributes['imageUrl'] = newImageUrl;
-    }
+      await axios.post(`${API_URL}/updateClothing`, { query: { id: props.editClothingId, update: updatedAttributes } });
+      resetEditfields();
+    };
 
-    await axios.post(`${import.meta.env.VITE_API_URL}/updateClothing`, { query: { id: props.editClothingId, update: updatedAttributes } });
+    processEditConfirm().catch((error) => {console.log(error)});
+  }
+
+  const handleDeleteClothing: () => void = () =>{
+    /**
+     * Deletes the clothing item from the database.
+     */
+    const processDeleteClothing: () => Promise<void> = async () => {
+      await axios.post(`${API_URL}/deleteClothing`, { query: { id: props.editClothingId } });
+    };
+
+    processDeleteClothing().catch((error) => {console.log(error)});
     resetEditfields();
-  };
+  }
 
-  const handleDeleteClothing = async () => {
-    await axios.post(`${import.meta.env.VITE_API_URL}/deleteClothing`, { query: { id: props.editClothingId } });
-    resetEditfields();
-  };
-
-  const handleEditCancel = () => {
+  const handleEditCancel: () => void = () => {
+    /**
+     * Cancels the edit by resetting the edit fields.
+     */
     resetEditfields();
   };
 
@@ -126,4 +160,4 @@ export function ClothingDisplayEditRow(props: {
       </td>
     </>
   )
-};
+}

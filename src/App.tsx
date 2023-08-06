@@ -14,7 +14,8 @@ import { firebaseConfig } from './firebaseConfig';
 import './App.css'
 
 declare global {
-  export interface Window{
+  export interface Window {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     cloudinary: any;
   }
 }
@@ -26,32 +27,15 @@ function App() {
   const [currentPage, setCurrentPage] = useState<string>('');
   const [databaseConnectionStatus, setDatabaseConnectionStatus] = useState<boolean>(false);
 
-  const checkDatabaseConnection = async () => {
-    let tryCount = 0;
-    const maxTries = 10 * 60;
-    const testUrl = `${import.meta.env.VITE_API_URL}/connectionCheck`;
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+  const API_URL: string = import.meta.env.VITE_API_URL;
 
-    while (!databaseConnectionStatus && tryCount < maxTries) {
-      await axios.get(testUrl)
-      .then((res) => {
-        if (res.status === 200) {
-          setDatabaseConnectionStatus(true);
-          tryCount = 5;
-        } else {
-          tryCount++;
-          console.log("Unknown error connecting to database.");
-          setTimeout(() => {null}, 1000);
-        }
-      })
-      .catch(() => {
-        tryCount++
-        tryCount % 10 === 0 && console.log('Waiting for database connection...');
-        setTimeout(() => {null}, 1000);
-      });
-    }
-  };
-
-  const getPageUrl = () => {
+  const getPageUrl: () => string = () => {
+    /**
+     * Returns the current page slug based on the URL.
+     * 
+     * @returns The current page slug
+     */
     const currentURL = window.location.href;
     const path = currentURL.replace(window.location.origin, '');
     const sections = path.split('/');
@@ -60,13 +44,21 @@ function App() {
     return filteredSections[0]
   };
 
-  const handleSetCurrentPage = (page: React.MouseEvent<any>) => {
-    const targetPage: string = page.currentTarget.dataset.targetPage;
+  const handleSetCurrentPage: (page: React.MouseEvent<HTMLAnchorElement>) => void = (page: React.MouseEvent<HTMLAnchorElement>) => {
+    /**
+     * Sets the current page slug based on the clicked link.
+     * 
+     * @param page - The clicked link
+     */
+    const targetPage: string = page.currentTarget.dataset.targetPage ? page.currentTarget.dataset.targetPage : '';
     targetPage ? setCurrentPage(targetPage) : setCurrentPage(getPageUrl());
   };
   
   useEffect(() => {
-    const page = getPageUrl();
+    /**
+     * Sets the current active page based on the URL.
+     */
+    const page: string = getPageUrl();
 
     if (['closet', 'about'].includes(page)) {
       setCurrentPage(page);
@@ -76,6 +68,10 @@ function App() {
   }, []);
 
   useEffect(() => {
+    /**
+     * Sets the logged in user ID based on the Firebase auth state.
+     */
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-argument, @typescript-eslint/no-explicit-any
     onAuthStateChanged(firebase.auth() as any, (user) => {
         if (user) {
             setLoggedInUid(user.uid);
@@ -84,8 +80,36 @@ function App() {
   }, []);
 
   useEffect(() => {
-    checkDatabaseConnection();
-  }, []);
+    /**
+     * Checks the database connection status.
+     */
+    const checkDatabaseConnection: () => Promise<void> = async () => {
+      let tryCount = 0;
+      const maxTries = 10 * 60;
+      const testUrl = `${API_URL}/connectionCheck`;
+
+      while (!databaseConnectionStatus && tryCount < maxTries) {
+        await axios.get(testUrl)
+        .then((res) => {
+          if (res.status === 200) {
+            setDatabaseConnectionStatus(true);
+            tryCount = 5;
+          } else {
+            tryCount++;
+            console.log("Unknown error connecting to database.");
+            setTimeout(() => {null}, 1000);
+          }
+        })
+        .catch(() => {
+          tryCount++
+          tryCount % 10 === 0 && console.log('Waiting for database connection...');
+          setTimeout(() => {null}, 1000);
+        });
+      }
+    };
+
+    checkDatabaseConnection().catch((err) => console.log(err));
+  }, [API_URL, databaseConnectionStatus]);
 
   return (
     <>
