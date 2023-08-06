@@ -15,7 +15,7 @@ This Outfit Picker V2 frontend provides a user-friendly interface for users to i
 
 Before running the Outfit Picker V2 API, make sure you have the following prerequisites installed on your system:
 
-- Node.js (at least version 12.x)
+- Node.js (at least version 18.16.x)
 - npm (Node Package Manager)
 
 ### Installation
