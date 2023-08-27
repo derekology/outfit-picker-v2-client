@@ -34,7 +34,7 @@ To set up the Outfit Picker V2 Client locally, follow these steps:
    cd outfit-picker-v2-client
    ```
 
-3. Install the dependencies using npm or yarn:
+3. Install the dependencies using npm:
 
    ```bash
    npm install
