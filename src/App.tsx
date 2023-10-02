@@ -83,30 +83,32 @@ function App() {
     /**
      * Checks the database connection status.
      */
-    const checkDatabaseConnection: () => Promise<void> = async () => {
+    const checkDatabaseConnection = async () => {
       let tryCount = 0;
       const maxTries = 10 * 60;
       const testUrl = `${API_URL}/connectionCheck`;
-
+    
       while (!databaseConnectionStatus && tryCount < maxTries) {
-        await axios.get(testUrl)
-        .then((res) => {
+        try {
+          const res = await axios.get(testUrl);
           if (res.status === 200) {
             setDatabaseConnectionStatus(true);
-            tryCount = 5;
+            tryCount = maxTries;
+            break;
           } else {
             tryCount++;
-            console.log("Unknown error connecting to database.");
-            setTimeout(() => {null}, 1000);
+            console.log("Waiting for database connection...");
+            await new Promise(resolve => setTimeout(resolve, 1000));
           }
-        })
-        .catch(() => {
-          tryCount++
-          tryCount % 10 === 0 && console.log('Waiting for database connection...');
-          setTimeout(() => {null}, 1000);
-        });
+        } catch (error) {
+          tryCount++;
+          if (tryCount % 10 === 0) {
+            console.log('Waiting for database connection...');
+          }
+          await new Promise(resolve => setTimeout(resolve, 1000));
+        }
       }
-    };
+    };    
 
     checkDatabaseConnection().catch((err) => console.log(err));
   }, [API_URL, databaseConnectionStatus]);
