@@ -1,11 +1,12 @@
 import { useState, useEffect } from 'react';
+import ReactGA from 'react-ga4';
 
 import { OutfitPickerPresentational } from './OutfitPickerPresentational';
 
 import { Outfit } from '../../interfaces/Outfit';
 
 export function OutfitPicker(props: { loggedInUid: string, handleSetCurrentPage: (page: React.MouseEvent<HTMLAnchorElement>) => void }) {
-    const [targetCity, setTargetCity] = useState<string>('Vancouver');
+    const [targetCity, setTargetCity] = useState<string>('Richmond,%20CA');
     const [weatherData, setWeatherData] = useState<{weatherTemp: number | null, weatherInfo: string}>({weatherTemp: null, weatherInfo: ''});
     const [appropriateWeight, setAppropriateWeight] = useState<string | null>(null);
     const [selectedOutfit, setSelectedOutfit] = useState<Outfit>({top: null, bottom: null});
@@ -47,7 +48,11 @@ export function OutfitPicker(props: { loggedInUid: string, handleSetCurrentPage:
          * Sets the selected outfit based on the user's selection.
          */
         setSelectedOutfit(selectedOutfit);
-    };
+    };    
+
+    useEffect(() => {        
+        ReactGA.send({ hitType: "pageview", page: "/", title: "Home" });
+    }, [])
 
     useEffect(() => {
         /**

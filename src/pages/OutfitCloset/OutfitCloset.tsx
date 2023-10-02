@@ -1,5 +1,6 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import firebase from 'firebase/compat/app';
+import ReactGA from 'react-ga4';
 
 import { LoginPopup } from '../../components/LogInPopup/LogInPopup';
 import { ClothingAdder } from '../../components/ClothingAdder/ClothingAdder';
@@ -27,6 +28,10 @@ export function OutfitCloset(props: { loggedInUid: string, setLoggedInUid: (uid:
             alert('Error logging out. Please try again later.');
         });
     }
+
+    useEffect(() => {        
+        ReactGA.send({ hitType: "pageview", page: "/closet", title: "Closet" });
+    }, [])
 
     return (
         <>  

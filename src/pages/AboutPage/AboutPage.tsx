@@ -1,6 +1,13 @@
+import { useEffect } from 'react';
+import ReactGA from 'react-ga4';
+
 import './AboutPage.css';
 
 export function AboutPage() {
+    useEffect(() => {        
+        ReactGA.send({ hitType: "pageview", page: "/about", title: "About" });
+    }, [])
+
     return (
         <>
             <p>

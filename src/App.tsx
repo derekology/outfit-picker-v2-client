@@ -4,6 +4,7 @@ import { Routes, Route, Navigate } from 'react-router-dom';
 import firebase from 'firebase/compat/app';
 import { onAuthStateChanged } from 'firebase/auth';
 import axios from 'axios';
+import ReactGA from 'react-ga4';
 
 import { OutfitPicker } from './pages/OutfitPicker/OutfitPicker';
 import { OutfitCloset } from './pages/OutfitCloset/OutfitCloset';
@@ -20,6 +21,8 @@ declare global {
   }
 }
 
+const GA4_MEASUREID: string = import.meta.env.VITE_GA4_MEASUREID as string;
+ReactGA.initialize(GA4_MEASUREID);
 firebase.initializeApp(firebaseConfig)
 
 function App() {
