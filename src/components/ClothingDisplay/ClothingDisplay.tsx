@@ -17,6 +17,8 @@ export function ClothingDisplay(props: { loggedInUid: string, updateMade: boolea
     const handleSetEditClothingId: (_id: string | null) => void = (_id: string | null) => {
       if (_id) {
         setEditClothingId(_id);
+      } else {
+        setEditClothingId(null);
       }
     };
 
