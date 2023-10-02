@@ -1,6 +1,6 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import firebase from 'firebase/compat/app';
-import ReactGA from 'react-ga4';
+import { Helmet } from "react-helmet";
 
 import { LoginPopup } from '../../components/LogInPopup/LogInPopup';
 import { ClothingAdder } from '../../components/ClothingAdder/ClothingAdder';
@@ -29,12 +29,13 @@ export function OutfitCloset(props: { loggedInUid: string, setLoggedInUid: (uid:
         });
     }
 
-    useEffect(() => {        
-        ReactGA.send({ hitType: "pageview", page: "/closet", title: "Closet" });
-    }, [])
-
     return (
         <>  
+            <Helmet>
+                <meta charSet="utf-8" />
+                <title>Closet | Outfit Picker</title>
+                <link rel="canonical" href="http://outfitpicker.wooprojects.com/closet" />
+            </Helmet>
             { props.loggedInUid === 'demo' ? <LoginPopup /> : 
                 <>
                     <ClothingAdder loggedInUid={props.loggedInUid} handleUpdateMade={handleUpdateMade} handleLoggedInUidUpdate={handleLoggedInUidUpdate} />

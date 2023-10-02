@@ -1,15 +1,15 @@
-import { useEffect } from 'react';
-import ReactGA from 'react-ga4';
+import { Helmet } from "react-helmet";
 
 import './AboutPage.css';
 
 export function AboutPage() {
-    useEffect(() => {        
-        ReactGA.send({ hitType: "pageview", page: "/about", title: "About" });
-    }, [])
-
     return (
         <>
+            <Helmet>
+                <meta charSet="utf-8" />
+                <title>About | Outfit Picker</title>
+                <link rel="canonical" href="http://outfitpicker.wooprojects.com/about" />
+            </Helmet>
             <p>
                 Outfit Picker keeps a database of my clothes and randomly chooses a top
                 and bottom for me to wear based on the weather.

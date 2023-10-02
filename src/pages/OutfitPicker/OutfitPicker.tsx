@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import ReactGA from 'react-ga4';
+import { Helmet } from "react-helmet";
 
 import { OutfitPickerPresentational } from './OutfitPickerPresentational';
 
@@ -48,11 +48,7 @@ export function OutfitPicker(props: { loggedInUid: string, handleSetCurrentPage:
          * Sets the selected outfit based on the user's selection.
          */
         setSelectedOutfit(selectedOutfit);
-    };    
-
-    useEffect(() => {        
-        ReactGA.send({ hitType: "pageview", page: "/", title: "Home" });
-    }, [])
+    };
 
     useEffect(() => {
         /**
@@ -71,6 +67,11 @@ export function OutfitPicker(props: { loggedInUid: string, handleSetCurrentPage:
 
     return (
         <>
+            <Helmet>
+                <meta charSet="utf-8" />
+                <title>Outfit Picker</title>
+                <link rel="canonical" href="http://outfitpicker.wooprojects.com/" />
+            </Helmet>
             <OutfitPickerPresentational
                 targetCity={targetCity}
                 handleCityChange={handleCityChange}
