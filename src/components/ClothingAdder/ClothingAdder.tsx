@@ -41,7 +41,7 @@ export function ClothingAdder(props: { loggedInUid: string, handleUpdateMade: ()
 
     const handleClothingColourChange: (e: React.ChangeEvent<HTMLInputElement>) => void = (e: React.ChangeEvent<HTMLInputElement>) => {
         /**
-         * Update the clothing colour state.
+         * Updates the clothing colour state.
          */
         setClothingColour(e.target.value);
     }

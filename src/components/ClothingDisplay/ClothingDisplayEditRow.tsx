@@ -46,7 +46,7 @@ export function ClothingDisplayEditRow(props: {
 
   const handleClearCurrentImage: () => void = () => {
     /**
-     * Set the image URL from the edit field to an empty string.
+     * Sets the image URL from the edit field to an empty string.
      */
     setNewImageUrl('')
   }

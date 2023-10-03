@@ -12,14 +12,23 @@ export function OutfitCloset(props: { loggedInUid: string, setLoggedInUid: (uid:
     const [updateMade, setUpdateMade] = useState<boolean>(false);
 
     const handleUpdateMade = () => {
+        /**
+         * Raises a flag when an update is made, or lower it when a pending update is handled.
+         */
         setUpdateMade(!updateMade);
     }
 
     const handleLoggedInUidUpdate = (uid: string) => {
+        /**
+         * Sets logged in id to id of logged in user.
+         */
         props.setLoggedInUid(uid);
     }
 
     const handleLogOut = () => {
+        /**
+         * Sets logged in id to default when user logs out.
+         */
         firebase.auth().signOut()
         .then(() => {
             handleLoggedInUidUpdate('demo');

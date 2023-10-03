@@ -15,6 +15,9 @@ export function ClothingDisplay(props: { loggedInUid: string, updateMade: boolea
     const API_URL: string = import.meta.env.VITE_API_URL
 
     const handleSetEditClothingId: (_id: string | null) => void = (_id: string | null) => {
+      /**
+       * Sets the clothing item to be edited.
+       */
       if (_id) {
         setEditClothingId(_id);
       } else {
