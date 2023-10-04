@@ -102,10 +102,10 @@ export function ClothingDisplayEditRow(props: {
      */
     const processDeleteClothing: () => Promise<void> = async () => {
       await axios.post(`${API_URL}/deleteClothing`, { query: { id: props.editClothingId } });
+      resetEditfields();
     };
 
-    processDeleteClothing().catch((error) => {console.log(error)});
-    resetEditfields();
+    processDeleteClothing().catch((error) => {console.log(error)});    
   }
 
   const handleEditCancel: () => void = () => {
