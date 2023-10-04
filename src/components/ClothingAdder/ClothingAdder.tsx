@@ -12,7 +12,7 @@ export function ClothingAdder(props: { loggedInUid: string, handleUpdateMade: ()
     const [clothingType, setClothingType] = useState<string | null>(null);
     const [clothingArticle, setClothingArticle] = useState<string | null>(null);
     const [clothingColour, setClothingColour] = useState<string | null>(null);
-    const [clothingWeight, setClothingWeight] = useState<string | null>('Light');
+    const [clothingWeight, setClothingWeight] = useState<string | null>('');
     const [clothingImageUrl, setClothingImageUrl] = useState<string>('');
 
     // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
@@ -89,7 +89,7 @@ export function ClothingAdder(props: { loggedInUid: string, handleUpdateMade: ()
         setClothingType(null);
         setClothingArticle(null);
         setClothingColour(null);
-        setClothingWeight(null);
+        setClothingWeight('');
         setClothingImageUrl('');
     }
 
@@ -98,7 +98,6 @@ export function ClothingAdder(props: { loggedInUid: string, handleUpdateMade: ()
          * Adds the clothing to the database.
          */
         if (!props.loggedInUid || !clothingType || !clothingArticle || !clothingColour || !clothingWeight) {
-            console.log(clothingType, clothingArticle, clothingColour, clothingWeight)
             alert('Error. Please fill out all required fields.')
             return;
         }
@@ -129,16 +128,14 @@ export function ClothingAdder(props: { loggedInUid: string, handleUpdateMade: ()
         <>
             <button onClick={handleShowAddClothingForm} >{ showAddClothingForm ? 'Cancel' : 'Add Something'}</button>
             { showAddClothingForm &&
-                <>
-                    <ClothingAdderPresentational 
-                        handleClothingTypeChange={handleClothingTypeChange}
-                        handleClothingArticleChange={handleClothingArticleChange}
-                        handleClothingColourChange={handleClothingColourChange}
-                        handleClothingWeightChange={handleClothingWeightChange}
-                        handleAddClothing={handleAddClothing}
-                        generateUploadButton={generateUploadButton}
-                    />
-                </> 
+                <ClothingAdderPresentational 
+                    handleClothingTypeChange={handleClothingTypeChange}
+                    handleClothingArticleChange={handleClothingArticleChange}
+                    handleClothingColourChange={handleClothingColourChange}
+                    handleClothingWeightChange={handleClothingWeightChange}
+                    handleAddClothing={handleAddClothing}
+                    generateUploadButton={generateUploadButton}
+                />
             }
         </>
     )
