@@ -77,7 +77,7 @@ export function ClothingAdder(props: { loggedInUid: string, handleUpdateMade: ()
                 <button className="sec-btn" onClick={handleImageUpload} >                        
                     {ADDIMAGEICON} Upload
                 </button>
-                {clothingImageUrl && <span onClick={() => setClothingImageUrl('')}>{CANCELEDIT}</span>}
+                {clothingImageUrl && <span style={{ cursor: 'pointer' }} onClick={() => setClothingImageUrl('')}>{CANCELEDIT}</span>}
             </>
         )
     }
