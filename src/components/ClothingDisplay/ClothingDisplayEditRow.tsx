@@ -139,14 +139,14 @@ export function ClothingDisplayEditRow(props: {
       <td>{<input type='checkbox' defaultChecked={!props.item.isAvailable} data-target-attr='isAvailable' ref={newIsAvailable}></input>}</td>
       <td>{(newImageUrl ?
         <>
-          <a style={{ cursor: 'pointer' }} href={props.item.imageUrl} target='_blank'>{VIEWIMAGEICON}</a>
+          <a style={{ cursor: 'pointer' }} href={newImageUrl ? newImageUrl : props.item.imageUrl} target='_blank'>{VIEWIMAGEICON}</a>
           &nbsp;&nbsp;
           <span title='Cancel pending image update' onClick={handleClearImageUrl} style={{ cursor: 'pointer' }}>{CANCELEDIT}</span>
         </>
         :
         <>
           <a style={{ cursor: 'pointer' }} onClick={handleImageUpload}>{ADDIMAGEICON}</a>
-          {(props.item.imageUrl !== '' && 
+          { ((props.item.imageUrl !== '' && newImageUrl !== '') && 
           <>&nbsp;&nbsp;
           <span title='Remove current image' onClick={handleClearCurrentImage} style={{ cursor: 'pointer' }}>{CANCELEDIT}</span>
           </> )}
