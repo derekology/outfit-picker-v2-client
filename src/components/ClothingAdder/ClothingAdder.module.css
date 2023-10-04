@@ -18,3 +18,7 @@
 .addClothingForm>*>label {
     font-weight: bold;
 }
+
+.addClothingForm>span.addClothingField {
+    margin-top: 15px
+}

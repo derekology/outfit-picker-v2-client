@@ -4,7 +4,7 @@ export function ClothingAdderPresentational(props: {handleClothingTypeChange: Re
     return (
         <>
             <div className={`${styles.addClothingForm} toggled-form`}>
-                <span>
+                <span className={`${styles.addClothingField} `}>
                     <label htmlFor="clothingType">Type</label><br/>
                     <span>
                         <input id='top' type="radio" name="clothingType" value="Top" onChange={props.handleClothingTypeChange} />
@@ -15,17 +15,17 @@ export function ClothingAdderPresentational(props: {handleClothingTypeChange: Re
                     </span>
                 </span>
         
-                <span>
+                <span className={`${styles.addClothingField}`}>
                     <label htmlFor="article">Article</label>
                     <br/>
                     <input type="text" name="article" placeholder='T-Shirt, Pants, etc.' onChange={props.handleClothingArticleChange} />
                 </span>
-                <span>
+                <span className={`${styles.addClothingField}`}>
                     <label htmlFor="colour">Colour</label>
                     <br/>
                     <input type="text" name="colour" onChange={props.handleClothingColourChange} />
                 </span>
-                <span>
+                <span className={`${styles.addClothingField}`}>
                     <label htmlFor="weight">Weight</label>
                     <br/>
                     <select className='editField' data-target-attr='weight' style={{ width: '177px' }} onChange={props.handleClothingWeightChange}>
@@ -35,10 +35,12 @@ export function ClothingAdderPresentational(props: {handleClothingTypeChange: Re
                         <option value='Heavy'>Heavy</option>
                     </select>
                 </span>
-                <span>
+                <span className={`${styles.addClothingField}`}>
+                    <label>Image (optional)</label>
+                    <br/>
                     <props.generateUploadButton />
                 </span>
-                <span><button onClick={props.handleAddClothing}>Add</button></span>
+                <span className={`${styles.addClothingField}`}><button onClick={props.handleAddClothing}>Add</button></span>
             </div>
         </>
     )
