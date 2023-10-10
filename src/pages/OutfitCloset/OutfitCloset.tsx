@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import firebase from 'firebase/compat/app';
-import { Helmet } from "react-helmet";
+import { Helmet } from 'react-helmet';
 
 import { LoginPopup } from '../../components/LogInPopup/LogInPopup';
 import { ClothingAdder } from '../../components/ClothingAdder/ClothingAdder';

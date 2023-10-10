@@ -1,10 +1,10 @@
-import { CityPicker } from "../../components/CityPicker/CityPicker";
-import { WeatherForecast } from "../../components/WeatherForecast/WeatherForecast";
-import { Picker } from "../../components/Picker/Picker";
-import { OutfitDisplay } from "../../components/OutfitDisplay/OutfitDisplay";
-import { Link } from "react-router-dom";
+import { CityPicker } from '../../components/CityPicker/CityPicker';
+import { WeatherForecast } from '../../components/WeatherForecast/WeatherForecast';
+import { Picker } from '../../components/Picker/Picker';
+import { OutfitDisplay } from '../../components/OutfitDisplay/OutfitDisplay';
+import { Link } from 'react-router-dom';
 
-import { Outfit } from "../../interfaces/Outfit";
+import { Outfit } from '../../interfaces/Outfit';
 
 export function OutfitPickerPresentational(props: {
   targetCity: string;
