@@ -11,8 +11,8 @@ export function AboutPage() {
                 <link rel="canonical" href="http://outfitpicker.wooprojects.com/about" />
             </Helmet>
             <p>
-                Outfit Picker keeps a database of my clothes and randomly chooses a top
-                and bottom for me to wear based on the weather.
+                Outfit Picker keeps a database of my clothes and chooses a top and bottom for me to wear based on the weather.<br/>
+                This choice is usually random, but OpenAI's GPT-3.5 will chime in with its recommendation once in a while.
             </p>
             <p>
                 Needless to say, I am <em>always</em> at the top of my fashion game.
