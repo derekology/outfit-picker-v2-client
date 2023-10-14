@@ -9,7 +9,8 @@ export function OutfitPicker(props: { loggedInUid: string, handleSetCurrentPage:
     const [targetCity, setTargetCity] = useState<string>('Richmond,%20CA');
     const [weatherData, setWeatherData] = useState<{weatherTemp: number | null, weatherInfo: string}>({weatherTemp: null, weatherInfo: ''});
     const [appropriateWeight, setAppropriateWeight] = useState<string | null>(null);
-    const [selectedOutfit, setSelectedOutfit] = useState<Outfit>({top: null, bottom: null});
+    const [selectedOutfit, setSelectedOutfit] = useState<Outfit>({top: null, bottom: null, aiGen: false});
+    const [disablePickerButton, setDisablePickerButton] = useState<boolean>(false);
 
     const handleCityChange: (e: React.ChangeEvent<HTMLSelectElement>) => void = (e: React.ChangeEvent<HTMLSelectElement>) => {
         /**
@@ -50,6 +51,13 @@ export function OutfitPicker(props: { loggedInUid: string, handleSetCurrentPage:
         setSelectedOutfit(selectedOutfit);
     };
 
+    const handleDisablePickerButton: (disablePickerButton: boolean) => void = (disablePickerButton: boolean) => {
+        /**
+         * Sets the disablePickerButton state.
+         */
+        setDisablePickerButton(disablePickerButton);
+    }
+
     useEffect(() => {
         /**
          * Sets the appropriate weight of the outfit if the weather data is retrieved.
@@ -62,7 +70,7 @@ export function OutfitPicker(props: { loggedInUid: string, handleSetCurrentPage:
         /**
          * Resets the selected outfit when the target city, weather data, or apporpriate weight for the weather is set or changes.
          */
-        setSelectedOutfit({top: null, bottom: null})
+        setSelectedOutfit({top: null, bottom: null, aiGen: false})
     }, [targetCity, weatherData, appropriateWeight])
 
     return (
@@ -82,6 +90,8 @@ export function OutfitPicker(props: { loggedInUid: string, handleSetCurrentPage:
                 selectedOutfit={selectedOutfit}
                 loggedInUid={props.loggedInUid} 
                 handleSetCurrentPage={props.handleSetCurrentPage}
+                disablePickerButton={disablePickerButton}
+                handleDisablePickerButton={handleDisablePickerButton}
                 />
         </>
     )

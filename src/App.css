@@ -36,6 +36,12 @@ button:hover {
     cursor: pointer;
   }
 
+button:disabled {
+    background-color: #eaeaea;
+    color: #222222;
+    cursor: not-allowed;
+  }
+
 .sec-btn {
   font-family: Raleway, Helvetica, Arial, sans-serif;
   background-color: #ffffff;

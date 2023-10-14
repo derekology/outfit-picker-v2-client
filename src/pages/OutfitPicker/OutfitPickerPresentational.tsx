@@ -19,6 +19,8 @@ export function OutfitPickerPresentational(props: {
   selectedOutfit: Outfit | null;
   loggedInUid: string;
   handleSetCurrentPage: (page: React.MouseEvent<HTMLAnchorElement>) => void;
+  disablePickerButton: boolean;
+  handleDisablePickerButton: (disablePickerButton: boolean) => void;
 }) {
   return (
     <>
@@ -34,11 +36,14 @@ export function OutfitPickerPresentational(props: {
       />
       <Picker
         appropriateWeight={props.appropriateWeight}
+        weatherData={props.weatherData}
         loggedInUid={props.loggedInUid}
         handleSelectedOutfitUpdate={props.handleSelectedOutfitUpdate}
+        handleDisablePickerButton={props.handleDisablePickerButton}
+        disablePickerButton={props.disablePickerButton}
       />
       {props.selectedOutfit && (
-        <OutfitDisplay selectedOutfit={props.selectedOutfit} />
+        <OutfitDisplay selectedOutfit={props.selectedOutfit} disablePickerButton={props.disablePickerButton}/>
       )}
       <br />
       {props.loggedInUid === "demo" && (
