@@ -7,7 +7,7 @@ export function OutfitDisplay(props: {selectedOutfit: Outfit, disablePickerButto
         return (
             <div className='loadingContainer' style={{ position: 'relative' }}>
                 <span className='loader'></span>
-                <div>Loading...</div>
+                <div>Thinking...</div>
             </div>
         )
     } else {
