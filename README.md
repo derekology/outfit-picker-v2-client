@@ -8,6 +8,7 @@ This Outfit Picker V2 frontend provides a user-friendly interface for users to i
 
 - Retrieve weather forecast for a specific city
 - Provide outfit recommendations based on the weather conditions and user's clothing
+- Receive an OpenAI-recommended outfit based on random chance
 
 ## Getting Started
 
